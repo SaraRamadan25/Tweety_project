@@ -19,6 +19,7 @@ class CreateLikesTable extends Migration
             $table->unsignedBigInteger('user_id')->constrained()->onDelte('cascaded');
             $table->unsignedBigInteger('tweet_id')->constrained()->onDelte('cascaded');
             $table->boolean('liked');
+            $table->boolean('disliked');
             $table->timestamps();
             $table->unique(['user_id','tweet_id']);
         });

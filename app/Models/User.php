@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -37,14 +38,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function getAvatarAttribute()
+    public function getAvatarAttribute(): string
     {
         return "https://i.pravatar.cc/200?u=".$this->email;
     }
-
-
-
-    public function setPasswordAttribute($value)
+    public function setPasswordAttribute($value): void
     {
         $this->attributes['password'] = bcrypt($value);
     }
@@ -60,17 +58,22 @@ class User extends Authenticatable
             ->paginate(50);
     }
 
-    public function tweets()
+    public function tweets(): HasMany
     {
         return $this->hasMany(Tweet::class)->latest();
     }
 
-    public function likes()
+    public function likes(): HasMany
     {
         return $this->hasMany(Like::class);
     }
 
-    public function path($append = '')
+    public function dislikes(): HasMany
+    {
+        return $this->hasMany(Dislike::class);
+    }
+
+    public function path($append = ''): string
     {
         $path = route('profile', $this->username);
 

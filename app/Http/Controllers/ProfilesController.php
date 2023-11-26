@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateProfileRequest;
 use App\Models\User;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Validation\Rule;
 
 class ProfilesController extends Controller
@@ -19,39 +25,14 @@ class ProfilesController extends Controller
         ]);
     }
 
-    public function edit(User $user)
+    public function edit(User $user): Factory|View|Application
     {
         return view('profiles.edit', compact('user'));
     }
 
-    public function update(User $user)
+    public function update(User $user, UpdateProfileRequest $request):Redirector|Application|RedirectResponse
     {
-        $attributes = request()->validate([
-            'username' => [
-                'string',
-                'required',
-                'max:255',
-                'alpha_dash',
-                Rule::unique('users')->ignore($user),
-            ],
-            'name' => ['string', 'required', 'max:255'],
-            'avatar' => ['image'],
-            'email' => [
-                'string',
-                'required',
-                'email',
-                'max:255',
-                Rule::unique('users')->ignore($user),
-            ],
-            'password' => [
-                'string',
-                'required',
-                'min:8',
-                'max:255',
-                'confirmed',
-            ],
-        ]);
-
+        $attributes = $request->validated();
         if (request('avatar')) {
             $attributes['avatar'] = request('avatar')->store('avatars');
         }
