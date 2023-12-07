@@ -6,8 +6,13 @@
             name="body"
             class="w-full"
             placeholder="What's up doc?"
+            oninput="updateCharacterCount(this)"
+            maxlength="255" {{-- Set the maximum character count --}}
         ></textarea>
-        <input  name="image" type="file">
+
+        <p id="characterCount" class="text-sm text-gray-500">Remaining characters: 255</p>
+
+        <input name="image" type="file">
 
         <hr class="my-4">
 
@@ -33,3 +38,14 @@
     <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
     @enderror
 </div>
+
+<script>
+    function updateCharacterCount(textarea) {
+        const maxLength = textarea.maxLength;
+        const currentLength = textarea.value.length;
+        const remainingCharacters = maxLength - currentLength;
+
+        // Display the remaining characters count
+        document.getElementById('characterCount').innerText = `Remaining characters: ${remainingCharacters}`;
+    }
+</script>
