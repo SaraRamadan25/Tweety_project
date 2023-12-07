@@ -18,9 +18,16 @@
             </a>
         </h5>
 
-        <p class="text-sm mb-3">
-            {{ $tweet->body }}
-        </p>
+        @if ($tweet->image)
+            <div class="mr-2 flex-shrink-0">
+                <a href="{{ $tweet->user->path() }}">
+                    <img
+                        src="{{ ('storage/TweetsImages/' . $tweet->image) }}"
+
+                    >
+                </a>
+            </div>
+        @endif
 
         @auth
             <x-like-buttons :tweet="$tweet" />
