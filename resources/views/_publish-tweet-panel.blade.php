@@ -7,7 +7,7 @@
             class="w-full"
             placeholder="What's up doc?"
             oninput="updateCharacterCount(this)"
-            maxlength="255" {{-- Set the maximum character count --}}
+            maxlength="255"
         ></textarea>
 
         <p id="characterCount" class="text-sm text-gray-500">Remaining characters: 255</p>
@@ -45,7 +45,6 @@
         const currentLength = textarea.value.length;
         const remainingCharacters = maxLength - currentLength;
 
-        // Display the remaining characters count
         document.getElementById('characterCount').innerText = `Remaining characters: ${remainingCharacters}`;
     }
 </script>

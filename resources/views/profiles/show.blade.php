@@ -1,11 +1,12 @@
 <x-app>
     <header class="mb-6 relative">
         <div class="relative">
-            <img src="{{ $user->banner}}"
+            <img src="{{ asset('storage/' . $user->banner) }}"
+                 alt="User Banner"
                  width="100%"
-                 alt=""
                  class="mb-2"
             >
+
 
             <img src="{{ $user->avatar }}"
                  alt=""
