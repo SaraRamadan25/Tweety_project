@@ -1,3 +1,11 @@
+@if(Session::has('success'))
+    <div class="bg-green-500 text-white p-4 rounded-md shadow-md flex items-center">
+        <strong class="mr-2">Success!</strong>
+        <span>{{ Session::get('success') }}</span>
+        <button type="button" class="ml-2" onclick="this.parentElement.style.display='none';">&times;</button>
+    </div>
+@endif
+
 <x-app>
     <header class="mb-6 relative">
         <div class="relative">

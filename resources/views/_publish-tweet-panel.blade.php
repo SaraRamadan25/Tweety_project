@@ -1,6 +1,16 @@
+
+@if(Session::has('success'))
+    <div class="bg-green-500 text-white p-4 rounded-md shadow-md flex items-center">
+        <strong class="mr-2">Success!</strong>
+        <span>{{ Session::get('success') }}</span>
+        <button type="button" class="ml-2" onclick="this.parentElement.style.display='none';">&times;</button>
+    </div>
+@endif
+
 <div class="border border-blue-400 rounded-lg px-8 py-6 mb-8">
     <form method="POST" action="/tweets" enctype="multipart/form-data">
         @csrf
+
 
         <textarea
             name="body"

@@ -7,6 +7,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Session;
 
 class TweetsController extends Controller
 {
@@ -29,6 +30,7 @@ class TweetsController extends Controller
             'body' => $attributes['body'],
             'image' => $imagePath,
         ]);
+        Session::flash('success', 'Tweet published successfully');
 
         return redirect()->route('home');
     }
