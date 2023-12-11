@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function (){
     Route::patch('/profiles/{user:username}',[ProfilesController::class, 'update'])->middleware('can:edit,user');
 
     Route::get('/explore',[ExploreController::class,'index']);
+    Route::delete('/tweets/{tweet}',[TweetsController::class,'destroy'])->name('tweets.destroy');
 });
 
 Route::get('/profiles/{user:username}',[ProfilesController::class, 'show'])->name('profile');

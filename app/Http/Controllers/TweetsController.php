@@ -34,4 +34,12 @@ class TweetsController extends Controller
 
         return redirect()->route('home');
     }
+
+    public function destroy(Tweet $tweet): RedirectResponse
+    {
+        $tweet->delete();
+        Session::flash('success', 'Tweet deleted successfully');
+
+        return back();
+    }
 }
