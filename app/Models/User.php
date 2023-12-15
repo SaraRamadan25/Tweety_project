@@ -81,7 +81,7 @@ class User extends Authenticatable
     }
     public function notifications(): HasMany
     {
-        return $this->hasMany(Notification::class)->orderByDesc('id');
+        return $this->hasMany(Notification::class);
     }
     public function mentions(): HasMany
     {

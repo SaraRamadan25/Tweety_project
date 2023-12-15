@@ -18,7 +18,6 @@ class CreateNotificationsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('message');
             $table->unsignedBigInteger('tweet_id')->nullable();
-            $table->boolean('read')->default(false);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

@@ -11,14 +11,9 @@ class NotificationController extends Controller
     {
         $user = Auth::user();
         $notifications = $user->notifications()->paginate(10);
-
-        return view('notification', compact('notifications'));
+        $notificationsCount = $user->notifications()->count();
+        return view('notification', compact('notifications', 'notificationsCount'), ['user' => $user]);
     }
 
-    public function markAsRead()
-    {
-        Auth::user()->unreadNotifications->markAsRead();
 
-        return redirect()->route('notifications');
-    }
 }

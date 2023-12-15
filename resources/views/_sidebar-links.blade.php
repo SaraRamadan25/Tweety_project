@@ -19,10 +19,16 @@
             </form>
         </li>
 
-        <li>
-            <a class="font-bold text-lg mb-4 block" href="{{ route('notifications.index') }}">
-                Notifications
+        @php
+            $notificationCount = Auth::user()->notifications->count();
+        @endphp
 
+        <li>
+            <a class="font-bold text-lg mb-4 block relative" href="{{ route('notifications.index') }}">
+                Notifications
+                @if ($notificationCount > 0)
+                    <span class="bg-blue-400 text-xs text-black rounded-full px-2 py-1">{{ $notificationCount }}</span>
+                @endif
             </a>
         </li>
     @endauth
