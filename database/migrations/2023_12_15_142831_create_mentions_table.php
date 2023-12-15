@@ -15,8 +15,8 @@ class CreateMentionsTable extends Migration
     {
         Schema::create('mentions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id'); // User who was mentioned
-            $table->unsignedBigInteger('tweet_id'); // Post in which the mention occurred
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('tweet_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('tweet_id')->references('id')->on('tweets')->onDelete('cascade');
             $table->timestamps();

@@ -15,10 +15,10 @@ class CreateNotificationsTable extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id'); // User to whom the notification belongs
-            $table->string('message'); // Notification message
-            $table->unsignedBigInteger('tweet_id')->nullable(); // Associated post (if any)
-            $table->boolean('read')->default(false); // Whether the notification has been read
+            $table->unsignedBigInteger('user_id');
+            $table->string('message');
+            $table->unsignedBigInteger('tweet_id')->nullable();
+            $table->boolean('read')->default(false);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
