@@ -11,7 +11,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable,Followable;
+    use HasApiTokens, HasFactory, Notifiable,Followable, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -78,6 +78,14 @@ class User extends Authenticatable
         $path = route('profile', $this->username);
 
         return $append ? "{$path}/{$append}" : $path;
+    }
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(Notification::class)->orderByDesc('id');
+    }
+    public function mentions(): HasMany
+    {
+        return $this->hasMany(Mention::class);
     }
 
 }

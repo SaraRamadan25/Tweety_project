@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Mention;
+use App\Models\Notification;
 use App\Models\Tweet;
+use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -26,11 +29,39 @@ class TweetsController extends Controller
         ]);
 
         $imagePath = isset($attributes['image']) ? $attributes['image']->store('TweetsImages') : null;
-        auth()->user()->tweets()->create([
+
+        $tweet = auth()->user()->tweets()->create([
             'body' => $attributes['body'],
             'image' => $imagePath,
         ]);
+
         Session::flash('success', 'Tweet published successfully');
+
+        $content = $attributes['body'];
+
+        $pattern = "/@([A-Za-z0-9_\.]+)/";
+        preg_match_all($pattern, $content, $matches);
+
+        $mentionedUsers = $matches[1];
+
+        if ($mentionedUsers) {
+            foreach ($mentionedUsers as $mentionedUser) {
+                $user = User::where('username', $mentionedUser)->first();
+
+                if ($user) {
+                    Mention::create([
+                        'user_id' => $user->id,
+                        'tweet_id' => $tweet->id,
+                    ]);
+
+                    Notification::create([
+                        'user_id' => $user->id,
+                        'message' => 'You were mentioned in a post.',
+                        'tweet_id' => $tweet->id,
+                    ]);
+                }
+            }
+        }
 
         return redirect()->route('home');
     }

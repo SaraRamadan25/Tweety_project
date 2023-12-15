@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ExploreController;
 use App\Http\Controllers\FollowsController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfilesController;
 use App\Http\Controllers\TweetLikesController;
 use App\Http\Controllers\TweetsController;
@@ -40,7 +41,8 @@ Route::middleware('auth')->group(function (){
     Route::get('/explore',[ExploreController::class,'index']);
     Route::delete('/tweets/{tweet}',[TweetsController::class,'destroy'])->name('tweets.destroy');
 });
-
+Route::get('/notifications', [NotificationController::class,'index'])->name('notifications.index');
+Route::post('/notifications/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notifications.mark-as-read');
 Route::get('/profiles/{user:username}',[ProfilesController::class, 'show'])->name('profile');
 
 
